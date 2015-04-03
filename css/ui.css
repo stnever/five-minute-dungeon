@@ -1,0 +1,624 @@
+@font-face {
+  font-family: 'icomoon';
+  src:url('../fonts/icomoon.eot?wbm48j');
+  src:url('../fonts/icomoon.eot?#iefixwbm48j') format('embedded-opentype'),
+    url('../fonts/icomoon.woff?wbm48j') format('woff'),
+    url('../fonts/icomoon.ttf?wbm48j') format('truetype'),
+    url('../fonts/icomoon.svg?wbm48j#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+*, *:before, *:after { box-sizing: border-box; }
+
+html, body {
+	margin: 0px; padding: 0px;
+	height: 100%;
+	font-family: chicagoflfregular;
+	background-color: #222;
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
+.toggle-button {display: none;}
+
+@media (max-width: 768px) {
+  body { overflow-x: hidden; }
+  .col.dungeon { width: 100%; }
+  .col.sidebar.off { transform: translate3d(100%,0,0); }
+  .col.sidebar {
+    background-color: rgba(0,0,0,0);
+    position: fixed;
+    top: 60px;
+    right: 0px;
+    bottom: 0px;
+    transition: all 0.4s ease 0s;
+    width: 100%;
+    border-radius: 6px 0 0 6px;
+  }
+
+  .col.sidebar .skills {
+    width: 70%;
+    position: absolute;
+    right: 0px;
+  }
+
+  .hero-bar { cursor: pointer; }
+  .toggle-button { display: hidden; float: right;}
+
+  /* remove the blue highlight mobile browsers apply
+     on clickable/focusable elements. */
+  li {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  }
+
+  li:focus {
+    outline: 0;
+    border:none;
+    color: rgba(0, 0, 0, 0);
+  }
+
+  .hero-bar .attr {
+    font-size: .6em;
+    width: 45px !important;
+  }
+
+  .dungeon .attr {
+    width: 45px !important;
+  }
+
+  .hero-bar .details {
+    left: 63px; margin-left: 0;
+  }
+
+  .logo {
+    background-image: url('../img/logo-small.png') !important;
+    height: 92px !important;
+    width: auto;
+    margin: 0 auto !important;
+  }
+
+  .credits { margin: 0 10px;}
+}
+
+/* These styles control the basic two-column layout ===================================== */
+.col { width: 50%; float: left; }
+
+.col ul {
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+.container {
+  max-width: 1000px;
+  padding-top: 60px;
+  margin: auto;
+  position: relative;
+}
+
+/* Game title ======================================= */
+h1 {
+    background-color: #5BA3A3;
+    color: #EEEEEE;
+    font-size: 50px;
+    font-weight: normal;
+    margin: 0;
+    padding: 10px;
+    text-align: center;
+	 text-shadow: 2px 2px 0 #000, -1px -1px 1px #666;
+}
+
+/* Hero bar ============================================================================= */
+.hero-bar {
+	color: #ffffff;
+	font-size: 20px;
+	overflow: hidden;
+	background-color: #9b59b6;
+  border-radius: 6px;
+	padding: 6px;
+  position: fixed;
+  max-height: 60px;
+  top: 0px;
+  max-width: 1000px;
+  width: 100%;
+  z-index: 9999;
+  border-style: solid;
+  border-width: 2px;
+
+  box-shadow: 0px 3px 5px #000;
+}
+
+.hero-bar .portrait {
+	float: left;
+	line-height: 2;
+	background-color: #edc22e;
+	color: #fff;
+	font-size: 32px;
+	text-align: center;
+  height: 48px;
+  width: 48px;
+}
+
+.hero-bar .attr { display: inline-block; width: 90px; }
+
+/* Skills sidebar ======================================================================= */
+.skills > li {
+  background-color: #CC9966;
+  border: 3px solid #996633;
+  border-radius: 3px;
+  margin: 2px 0 2px 5px;
+  padding: 5px;
+	font-size: 25px;
+  line-height: 32px;
+	cursor: pointer;
+	position: relative;
+}
+
+.skills > li .attr { line-height: 40px; }
+
+.skills > li.selected {
+	box-shadow: 0 0 6px 6px red;
+	z-index: 999;
+}
+
+.skills > li h4 {
+	font-size: 30px;
+	margin: 0; padding: 0;
+}
+
+.skills > li p {
+	font-size: 20px;
+	margin: 0; padding: 0;
+}
+
+.skills > li.disabled {
+    color: #CCCCCC;
+}
+
+.skill-cost {
+    color: #FFFFFF;
+    position: absolute;
+    top: 50%;
+    margin-top: -20px;
+    right: 10px;
+}
+
+.skills > li:not(.disabled):active { top: 3px; }
+
+/* Monsters and events in the main dungeon ============================================== */
+.dungeon > li {
+  background-color: #CCC0B3;
+	display: block;
+	clear: both;
+	overflow: auto;
+	text-decoration: none;
+	position: relative;
+	cursor: pointer;
+  margin-bottom: 6px;
+	border-radius: 3px;
+  max-height: 60px;
+  overflow: hidden;
+}
+
+.dungeon > li:last-child { margin-bottom: 0; }
+
+.dungeon > li:hover { background-color: #EEE4DA; }
+
+.dungeon > li.disabled {
+  background-color: #555555;
+}
+
+.details {
+  /*float: left;*/
+	/*position: absolute;*/
+	right: 0px;
+	left: 60px;
+  /*height: 100%;*/
+}
+
+.dungeon .portrait {
+	float: left;
+	line-height: 2;
+	background-color: #f65e3b;
+	color: transparent;
+	font-size: 28px;
+	text-align: center;
+  height: 48px;
+  width: 48px;
+  overflow: hidden;
+  margin: 4px;
+}
+
+.dungeon > li h4 {
+	font-size: 20px;
+	margin: 10px 0;
+	padding: 0;
+}
+
+.dungeon > li ul.attributes {
+	font-size: 14px;
+	margin: 0; padding: 0;
+	position: absolute;
+  right: 0px;
+  bottom: 0px;
+}
+
+.cost {
+  position: relative;
+  top: 11px;
+  height: 36px;
+  font-size: 26px;
+}
+
+.cost.free:before {
+  content: '\e628';
+  color: #2ecc71;
+}
+
+.cost.keys:before, .cost.coins:before {
+  color: #F1C40F;
+  text-shadow: -1px -1px #A0522D, -1px 1px #A0522D, 1px 1px #A0522D, 1px -1px #A0522D;
+}
+
+.cost.hp, .cost.hp:before { color: #FF00BF; }
+.cost.hp:before { content: "\e602" }
+.cost.hp .combat-turns { color: #000; }
+
+.cost.coins { color: #ccc; }
+.cost.coins:before { content: '\e61a'; }
+
+.cost.keys { color: transparent; }
+.cost.keys:before { content: '\e61b'; }
+
+/*
+.coin-cost {
+  background-image: url("../img/sprites/coin-copper.png");
+  background-repeat: no-repeat;
+  background-size: 32px;
+  background-position: 0px 4px;
+
+  font-size: 20px;
+  line-height: 32px;
+  padding-left: 40px;
+  position: absolute;
+  top: 14px;
+  height: 32px;
+  color: #ccc;
+}
+*/
+
+.monster .loot {
+  height: 32px;
+  width: 32px;
+}
+
+.loot {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  margin: 4px;
+  height: 48px;
+  width: 48px;
+  overflow: hidden;
+}
+
+
+/* styles for attributes ===================================================================== */
+ul.attributes { display: inline-block; background-color: #fff; border-radius: 3px;}
+ul.attributes li { list-style-type: none; }
+
+.attr { text-align: right;}
+.attr.atk { color: #e74c3c; }
+.attr.def { color: #3498db; }
+.attr.hp  { color: #f1c40f; }
+.attr.spd { color: #2ecc71; }
+.attr.keys {}
+.attr.coins {}
+.attr.stars {}
+.attr.level {}
+.attr.xp {}
+
+.attr:after, .cost:before, .skill-cost {
+  font-family: 'icomoon';
+  font-size: .8em;
+  display: inline-block;
+  width: 1.2em;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.attr.xp {
+  background: linear-gradient(to bottom,
+    rgba(0, 0, 0, 1) 50%,
+    rgba(128, 128, 128, 1) 100%
+  );
+  border-radius: 5px;
+  position: relative;
+}
+
+.xp-bar {
+  display: block;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  border-radius: 5px 0 0 5px;
+  background: linear-gradient(to bottom,
+    rgba(176, 195, 247, 1.0) 0%,
+    rgba(33, 73, 184, 1.0) 100%
+  );
+}
+
+.coins:after, .keys:after, .stars:after, .skill-cost {
+  color: #F1C40F;
+  text-shadow: -1px -1px #A0522D, -1px 1px #A0522D, 1px 1px #A0522D, 1px -1px #A0522D;
+}
+
+.attr.atk:after { content: "\e603" }
+.attr.def:after { content: "\e611" }
+.attr.hp:after  { content: "\e600" }
+.attr.spd:after { content: "\e614" }
+.attr.keys:after { content: '\e61b' }
+.attr.coins:after { content: '\e61a' }
+.attr.stars:after { content: '\e620' }
+.attr.level:before { content: '' }
+.attr.xp:after { content: '' }
+
+.dungeon .attr { display: inline-block; width: 65px; }
+
+.portrait .level:after { content: '';}
+.portrait .level {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  font-size: 9pt;
+  line-height: 1em;
+  font-family: Arial Black;
+  opacity: 0.7;
+}
+
+/* classic colors ================================================================== */
+.classic .dungeon {
+  background-color: rgba(29, 34, 38, 1);
+  padding: 0;
+  border: 0;
+  margin: 5px 0 0 0;
+}
+
+.classic .dungeon .attributes {
+  background-color: transparent; /*#594A3C;*/
+}
+
+.classic .dungeon .level { color: #fff; }
+
+.classic .dungeon > li, .btn > li {
+  border-style: solid;
+  border-width: 2px;
+  margin-bottom: 3px;
+}
+
+.classic .dungeon > li, .brown {
+  border-color: #594a3c;
+  background: linear-gradient(to bottom,
+    rgba(50, 42, 34, 1) 0%,
+    rgba(89, 74, 60, 1) 100%
+  );
+}
+
+.classic li.merchant, .orange {
+  border-color: rgba(136, 72, 16, 1);
+  background: linear-gradient(to bottom,
+    rgba(99, 50, 2, 1) 0%,
+    rgba(136, 72, 16, 1) 100%
+  );
+}
+
+.classic li.disabled, .black {
+  border-color: rgba(128, 128, 128, 1) !important;
+  background: #000 !important;
+  color: #fff !important;
+}
+
+.blueish-black {
+  border-color: rgb(53, 108, 97);
+  background: #000;
+  color: #fff;
+}
+
+.classic .skills > li.gray {
+  border-color: #666;
+  background: linear-gradient(to bottom,
+    #333 0%,
+    #666 100%
+  );
+}
+
+.classic .portrait {
+  background-color: transparent;
+}
+
+.classic li.chest, .green {
+  border-color: rgba(57, 115, 104, 1);
+  background: linear-gradient(to bottom,
+    rgba(42, 82, 74, 1) 0%,
+    rgba(57, 115, 104, 1) 100%
+  );
+}
+
+.classic .hero-bar, .blue {
+  border-color: rgba(48, 72, 105, 1);
+  background: linear-gradient(to bottom,
+    rgba(32, 48, 70, 1) 0%,
+    rgba(48, 72, 105, 1) 100%
+  );
+}
+
+.classic li.monster {}
+.classic li.boss, .pink {
+  border-color: rgba(128, 64, 96, 1);
+  background: linear-gradient(to bottom,
+    rgba(67, 34, 50, 1),
+    rgba(128, 64, 96, 1)
+  );
+}
+
+.classic li.trap {}
+
+.classic .skills li.disabled {
+  border-color: rgba(128, 128, 128, 1);
+  background: #000;
+  color: #fff;
+}
+
+.classic .skills {
+  background-color: #000;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  border-bottom-left-radius: 8px;
+  border-top-left-radius: 8px;
+}
+
+.classic .skills > li {
+  border-color: rgba(57, 115, 104, 1);
+  background: linear-gradient(to bottom,
+    rgba(42, 82, 74, 1) 0%,
+    rgba(57, 115, 104, 1) 100%
+  );
+}
+
+.classic .skills .attributes {
+  background-color: transparent;
+}
+
+/* Other buttons */
+.btn {
+  padding: 0;
+}
+
+.btn > li {
+  display: block;
+  /*clear: both;*/
+  /*overflow: auto;*/
+  text-decoration: none;
+  position: relative;
+  cursor: pointer;
+  margin-bottom: 6px;
+  border-radius: 3px;
+  overflow: visible;
+
+  color: rgba(255,255,255,.7);
+  font-size: 25px;
+  line-height: 30px;
+}
+
+.btn.tabs { font-size: 0; }
+.btn.tabs > li {
+  display: inline-block;
+  height: 60px;
+  line-height: 60px;
+  width: 16%;
+}
+
+.gallery > li {
+}
+
+.btn .portrait {
+  display: inline-block;
+  line-height: 2;
+  /*background-color: #f65e3b;*/
+  color: transparent;
+  font-size: 28px;
+  text-align: center;
+  height: 56px;
+  width: 56px;
+  overflow: hidden;
+  margin: 4px;
+}
+
+.btn h3 {
+  margin: 0px;
+  padding: 0px;
+  display: inline-block;
+  position: relative;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.btn .details {
+  display: inline-block;
+}
+
+.details p {
+  margin: 0;
+  padding: 0;
+  font-size: .8em;
+}
+
+.details h4 {
+  position: absolute;
+  top: 0;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+}
+
+.menu {
+  width: 300px;
+  margin: auto;
+}
+
+.text-center { text-align: center; }
+
+.menu-toggle {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  height: 48px;
+  width: 48px;
+  border-radius: 5px;
+  border: 2px solid rgba(255,255,255,.5);
+  background-color: transparent;
+  cursor: pointer;
+  z-index: 9999;
+}
+
+.menu-toggle:after {
+  font-family: 'icomoon';
+  font-size: 32px;
+  line-height: 44px;
+  text-align: center;
+
+  content: '\e9bd';
+
+  display: block;
+  color: rgba(255,255,255,.5);
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.credits {
+  text-align: justify;
+  color: rgba(255,255,255,.5);
+  font-size: 20px;
+  white-space: pre-line;
+}
+
+.logo {
+  display: block;
+  margin: 50px auto;
+  background-image: url('../img/logo.png');
+  height: 189px;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
