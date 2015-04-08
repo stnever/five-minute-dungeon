@@ -1,39 +1,41 @@
 // This file has all the hero classes available for the player to
 // choose. The skills for each hero class are defined in skills.js
 
-Game.gallery.heroClasses.push(
-  {id: 'novice', name: 'Novice', create: function() {
-    return {
-      nextLevelXp: 100,
-      level: 1,
-      xp: 0,
-      attributes: {
-        hp: 500,
-        atk: 25,
-        def: 10,
-        spd: 40,
+Game.gallery.heroClasses.push({
+  id: 'novice',
+  name: 'Novice',
+  description: '',
 
-        coins: 37,
-        keys: 3,
-        stars: 3
-      },
-      limits: {
-        hp: between(1000, 2000, 100),
-        atk: between(200, 255, 5),
-        def: between(200, 255, 5),
-        speed: between(7,9)
-      },
-      skills: [
-      	{name: 'upgrade1', type: 'level-up', stars: 1, gain: { hp: +100 }},
-      	{name: 'upgrade2', type: 'level-up', stars: 1, gain: { atk: +4 }},
-      	{name: 'upgrade3', type: 'level-up', stars: 1, gain: { def: +4 }},
-      	{name: 'upgrade4', type: 'level-up', stars: 1, gain: { spd: -2 }},
+  nextLevelXp: 100,
+  level: 1,
+  xp: 0,
+  attributes: {
+    hp: 500,
+    atk: 25,
+    def: 10,
+    spd: 40,
 
-        _.find(Game.gallery.skills, {id: 'quick-learner'})
-      ]
-    }
-  }}
-)
+    coins: 37,
+    keys: 3,
+    stars: 3
+  },
+
+  limits: {
+    hp: between(1000, 2000, 100),
+    atk: between(200, 255, 5),
+    def: between(200, 255, 5),
+    speed: between(7,9)
+  },
+
+  skills: [
+  	{name: 'upgrade1', type: 'level-up', stars: 1, gain: { hp: +100 }},
+  	{name: 'upgrade2', type: 'level-up', stars: 1, gain: { atk: +4 }},
+  	{name: 'upgrade3', type: 'level-up', stars: 1, gain: { def: +4 }},
+  	{name: 'upgrade4', type: 'level-up', stars: 1, gain: { spd: -2 }},
+
+    _.find(Game.gallery.skills, {id: 'quick-learner'})
+  ]
+})
 
 Game.gallery.heroClasses.push({
   id: 'barbarian',

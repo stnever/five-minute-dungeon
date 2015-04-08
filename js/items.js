@@ -1,6 +1,6 @@
 // These are the basic loot items, that can drop from any monster.
 Game.gallery.loot.push(
-  {id: 'gem-yellow'   , name: 'Yellow Gem'   , gain: { hp: +50 } },
+  {id: 'gem-yellow'   , name: 'Yellow Gem'   , description: 'Crystal imbued with life essence.', gain: { hp: +50 } },
   {id: 'gem-red'      , name: 'Red Gem'      , gain: { atk: +2 } },
   {id: 'gem-blue'     , name: 'Blue Gem'     , gain: { def: +2 } },
   {id: 'gem-green'    , name: 'Green Gem'    , gain: { spd: -1 } },

@@ -1,0 +1,83 @@
+.knight-blue   {background-image: url("characters/knight-blue.png"); }
+.knight-green  {background-image: url("characters/knight-green.png"); }
+.knight-red    {background-image: url("characters/knight-red.png"); }
+.knight-yellow {background-image: url("characters/knight-yellow.png"); }
+.cait-sith     {background-image: url("characters/cait-sith.png"); }
+.demon         {background-image: url("characters/demon.png"); }
+.skeleton-king {background-image: url("characters/skeleton-king.png"); }
+.skuleton      {background-image: url("characters/skuleton.png"); }
+.wailing-wall  {background-image: url("characters/wailing-wall.png"); }
+.robot         {background-image: url("characters/robot.png"); }
+
+.assassin  { background-image: url("characters/assassin.png"); }
+.barbarian { background-image: url("characters/barbarian.png"); }
+.berserker { background-image: url("characters/berserker.png"); }
+.dancer    { background-image: url("characters/dancer.png"); }
+.dwarf     { background-image: url("characters/dwarf.png"); }
+.indiana   { background-image: url("characters/indiana.png"); }
+.master    { background-image: url("characters/master.png"); }
+.ninja     { background-image: url("characters/ninja.png"); }
+.novice    { background-image: url("characters/novice.png"); }
+.thief     { background-image: url("characters/thief.png"); }
+
+.merchant  { background-image: url("characters/merchant.png"); }
+.chest     { background-image: url("characters/chest.png"); }
+.trap      { background-image: url("characters/trap.png"); }
+
+.frost-troll { background-image: url("characters/frost-troll.png"); }
+.mummy       { background-image: url("characters/mummy.png"); }
+.reptant     { background-image: url("characters/reptant.png"); }
+.sand-golem  { background-image: url("characters/sand-golem.png"); }
+.skeleton    { background-image: url("characters/skeleton.png"); }
+.werewolf    { background-image: url("characters/werewolf.png"); }
+.zombie      { background-image: url("characters/zombie.png"); }
+
+
+.coin-copper  {background-image: url("items/resized-coin-copper.png"); }
+.coin-gold    {background-image: url("items/resized-coin-gold.png"); }
+.coin-silver  {background-image: url("items/resized-coin-silver.png"); }
+
+.gem-blue     {background-image: url("items/g2-blue.png");}
+.gem-green    {background-image: url("items/g2-green.png");}
+.gem-red      {background-image: url("items/g2-red.png");}
+.gem-silver   {background-image: url("items/g2-white.png"); }
+.gem-yellow   {background-image: url("items/g2-yellow.png"); }
+
+
+
+.wooden-sword    { background-image: url(./items/wooden-sword.png); background-repeat: no-repeat; background-size: 48px; background-position: center center;}
+.wooden-shield   { background-image: url(./items/wooden-shield.png); background-repeat: no-repeat; background-size: 48px; background-position: center center;}
+.wooden-ring     { background-image: url(./items/ring-wooden.png); background-repeat: no-repeat; background-size: 48px; background-position: center center;}
+.iron-sword      { background-image: url(./items/iron-sword.png); background-repeat: no-repeat; background-size: 48px; background-position: center center;}
+.iron-shield     { background-image: url(./items/iron-shield.png); background-repeat: no-repeat; background-size: 48px; background-position: center center;}
+.iron-boots      { background-image: url(./items/.png); background-repeat: no-repeat; background-size: 48px; background-position: center center;}
+.iron-ring       { background-image: url(./items/ring-iron.png); background-repeat: no-repeat; background-size: 48px; background-position: center center;}
+.great-sword     { background-image: url(./items/great-sword.png); background-repeat: no-repeat; background-size: 48px; background-position: center center;}
+.wind-dagger     { background-image: url(./items/wind-dagger.png); background-repeat: no-repeat; background-size: 48px; background-position: center center;}
+.tower-shield    { background-image: url(./items/tower-shield.png); background-repeat: no-repeat; background-size: 48px; background-position: center center;}
+.mithril-sword   { background-image: url(./items/mithril-sword.png); background-repeat: no-repeat; background-size: 48px; background-position: center center;}
+.mithril-shield  { background-image: url(./items/mithril-shield.png); background-repeat: no-repeat; background-size: 48px; background-position: center center;}
+.mithril-boots   { background-image: url(./items/.png); background-repeat: no-repeat; background-size: 48px; background-position: center center;}
+.yellow-ring     { background-image: url(./items/ring-yellow.png); background-repeat: no-repeat; background-size: 48px; background-position: center center;}
+.red-ring        { background-image: url(./items/ring-red.png); background-repeat: no-repeat; background-size: 48px; background-position: center center;}
+.blue-ring       { background-image: url(./items/ring-blue.png); background-repeat: no-repeat; background-size: 48px; background-position: center center;}
+.green-ring      { background-image: url(./items/ring-green.png); background-repeat: no-repeat; background-size: 48px; background-position: center center;}
+.black-ring      { background-image: url(./items/ring-black.png); background-repeat: no-repeat; background-size: 48px; background-position: center center;}
+.white-ring      { background-image: url(./items/ring-white.png); background-repeat: no-repeat; background-size: 48px; background-position: center center;}
+.dragons-fury    { background-image: url(./items/dragons-fury.png); background-repeat: no-repeat; background-size: 48px; background-position: center center;}
+.winters-breath  { background-image: url(./items/winters-breath.png); background-repeat: no-repeat; background-size: 48px; background-position: center center;}
+.storms-roar     { background-image: url(./items/storms-roar.png); background-repeat: no-repeat; background-size: 48px; background-position: center center;}
+.shadow-dagger   { background-image: url(./items/shadow-dagger.png); background-repeat: no-repeat; background-size: 48px; background-position: center center;}
+.black-shield    { background-image: url(./items/wall-shield.png); background-repeat: no-repeat; background-size: 48px; background-position: center center;}
+.white-shield    { background-image: url(./items/life-shield-big.png); background-repeat: no-repeat; background-size: 48px; background-position: center center;}
+.wind-boots      { background-image: url(./items/.png); background-repeat: no-repeat; background-size: 48px; background-position: center center;}
+.holy-sword      { background-image: url(./items/holy-sword.png); background-repeat: no-repeat; background-size: 48px; background-position: center center;}
+.holy-shield     { background-image: url(./items/holy-shield.png); background-repeat: no-repeat; background-size: 48px; background-position: center center;}
+.goddess-ring    { background-image: url(./items/.png); background-repeat: no-repeat; background-size: 48px; background-position: center center;}
+.skull-sword     { background-image: url(./items/skull-sword.png); background-repeat: no-repeat; background-size: 48px; background-position: center center;}
+.skull-shield    { background-image: url(./items/skull-shield-2.png); background-repeat: no-repeat; background-size: 48px; background-position: center center;}
+.skull-ring      { background-image: url(./items/skull-ring.png); background-repeat: no-repeat; background-size: 48px; background-position: center center;}
+.ring-of-life    { background-image: url(./items/relic-of-constitution.png); background-repeat: no-repeat; background-size: 48px; background-position: center center;}
+.ring-of-attack  { background-image: url(./items/relic-of-might.png); background-repeat: no-repeat; background-size: 48px; background-position: center center;}
+.ring-of-defense { background-image: url(./items/relic-of-valor.png); background-repeat: no-repeat; background-size: 48px; background-position: center center;}
+.ring-of-speed   { background-image: url(./items/relic-of-haste.png); background-repeat: no-repeat; background-size: 48px; background-position: center center;}

@@ -1,37 +1,38 @@
 <!DOCTYPE html>
 <html ng-app="FiveMinuteDungeon">
 	<head>
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, user-scalable=0"/>
-    <meta name="apple-mobile-web-app-capable" content="yes"/>
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1, IE=9">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="FiveMinuteDungeon">
+    <meta name="viewport" content="initial-scale=1 maximum-scale=1 user-scalable=0 minimal-ui" />
 
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-    <link rel="shortcut icon" href="/mu/img/mu-favicons/favicon.ico">
-    <link rel="apple-touch-icon" sizes="57x57" href="/mu/img/mu-favicons/apple-touch-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="/mu/img/mu-favicons/apple-touch-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="/mu/img/mu-favicons/apple-touch-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="/mu/img/mu-favicons/apple-touch-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="/mu/img/mu-favicons/apple-touch-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="/mu/img/mu-favicons/apple-touch-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="/mu/img/mu-favicons/apple-touch-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="/mu/img/mu-favicons/apple-touch-icon-152x152.png">
-    <link rel="icon" type="image/png" href="/mu/img/mu-favicons/favicon-196x196.png" sizes="196x196">
-    <link rel="icon" type="image/png" href="/mu/img/mu-favicons/favicon-160x160.png" sizes="160x160">
-    <link rel="icon" type="image/png" href="/mu/img/mu-favicons/favicon-96x96.png" sizes="96x96">
-    <link rel="icon" type="image/png" href="/mu/img/mu-favicons/favicon-16x16.png" sizes="16x16">
-    <link rel="icon" type="image/png" href="/mu/img/mu-favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="apple-touch-icon" sizes="57x57" href="/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/favicons/apple-touch-icon-120x120.png">
+    <link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/favicons/manifest.json">
+    <link rel="shortcut icon" href="/favicons/favicon.ico">
     <meta name="msapplication-TileColor" content="#da532c">
-    <meta name="msapplication-TileImage" content="/mu/img/mu-favicons/mstile-144x144.png">
-    <meta name="msapplication-config" content="/mu/img/mu-favicons/browserconfig.xml">
+    <meta name="msapplication-config" content="/favicons/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+
     <title>Five Minute Dungeon</title>
     <link href="fonts/stylesheet-chicago.css" rel="stylesheet">
     <link href="css/ui.css" rel="stylesheet">
-		<link href="img/sprites/sprites.css" rel="stylesheet">
+		<link href="img/sprites.css" rel="stylesheet">
   </head>
   <body ng-controller="DungeonController" ng-cloak ng-init="Game.state = 'menu'">
-
-    {{Game.dungeon.age}}
 
     <div class="menu-toggle"
       ng-hide="Game.state == 'menu'"
@@ -40,17 +41,17 @@
 
     <div style="padding-top: 10px;" class="container classic" ng-if="Game.state == 'menu'">
       <div class="logo"></div>
-      <ul class="menu btn">
+      <ul class="menu btns">
         <li class="pink" ng-click="enterDungeon()">
-          <div class="portrait boss-skeleton-king"></div>
+          <div class="portrait skeleton-king"></div>
           <h3>Dungeon</h3>
         </li>
         <li class="orange" ng-click="Game.state = 'gallery'">
-          <div class="portrait crystal-silver"></div>
+          <div class="portrait gem-silver"></div>
           <h3>Gallery</h3>
         </li>
         <li class="blueish-black" ng-click="Game.state = 'credits'">
-          <div class="portrait boss-robot"></div>
+          <div class="portrait robot"></div>
           <h3>About</h3>
         </li>
       </ul>
@@ -75,25 +76,28 @@
 
     <div class="container classic" ng-if="Game.state == 'gallery'">
 
-      <ul class="tabs btn" ng-init="tab = 'items'">
-        <li ng-click="tab = 'heroes'">Heroes</li>
-        <li ng-click="tab = 'monsters'">Monsters</li>
-        <li ng-click="tab = 'bosses'">Bosses</li>
-        <li ng-click="tab = 'items'">Items</li>
-        <li ng-click="tab = 'skills'">Skills</li>
-        <li ng-click="tab = 'skills'">Achievements</li>
+      <ul class="tabs btns" ng-init="tab = 'heroes'">
+        <li class="brown" ng-click="tab = 'heroes'">Heroes</li>
+        <li class="brown" ng-click="tab = 'monsters'">Monsters</li>
+        <li class="brown" ng-click="tab = 'bosses'">Bosses</li>
+        <li class="brown" ng-click="tab = 'items'">Items</li>
+        <li class="brown" ng-click="tab = 'skills'">Skills</li>
+        <li class="brown" ng-click="tab = 'skills'">Achievements</li>
       </ul>
 
-      <ul class="gallery btn" ng-show="tab == 'heroes'">
+      <ul class="gallery btns" ng-show="tab == 'heroes'">
         <li class="blue" ng-repeat="h in Game.gallery.heroClasses">
-          <div class="portrait hero-{{h.id}}"></div>
-          <p>{{h.name}}</p>
+          <div class="portrait {{h.id}}"></div>
+          <div class="details">
+            <h4>{{h.name}}</h4>
+            <p>{{h.description}}</p>
+          </div>
         </li>
       </ul>
 
-      <ul class="gallery btn" ng-show="tab == 'monsters'">
+      <ul class="gallery btns" ng-show="tab == 'monsters'">
         <li class="brown" ng-repeat="h in Game.gallery.monsterClasses">
-          <div class="portrait monster-{{h.id}}"></div>
+          <div class="portrait {{h.id}}"></div>
           <div class="details">
             <h4>{{h.name}}</h4>
             <p>{{h.description}}</p>
@@ -101,9 +105,9 @@
         </li>
       </ul>
 
-      <ul class="gallery btn" ng-show="tab == 'bosses'">
+      <ul class="gallery btns" ng-show="tab == 'bosses'">
         <li class="pink" ng-repeat="h in Game.gallery.bossClasses">
-          <div class="portrait boss-{{h.id}}"></div>
+          <div class="portrait {{h.id}}"></div>
           <div class="details">
             <h4>{{h.name}}</h4>
             <p>{{h.description}}</p>
@@ -111,7 +115,7 @@
         </li>
       </ul>
 
-      <ul class="gallery btn" ng-show="tab == 'items'">
+      <ul class="gallery btns" ng-show="tab == 'items'">
         <li class="orange" ng-repeat="h in Game.gallery.loot">
           <div class="portrait {{h.id}}"></div>
           <div class="details">
@@ -128,9 +132,9 @@
         </li>
       </ul>
 
-      <ul class="gallery btn" ng-show="tab == 'skills'">
+      <ul class="gallery btns" ng-show="tab == 'skills'">
         <li class="green" ng-repeat="h in Game.gallery.skills">
-          <div class="portrait boss-{{h.id}}"></div>
+          <div class="portrait"></div>
           <div class="details">
             <h4>{{h.name}}</h4>
             <p>{{h.description}}</p>
@@ -142,35 +146,36 @@
 
     <div class="container classic" ng-if="Game.state == 'dungeon'">
 
-      <div class="hero-bar"
+      <ul class="hero-bar btns"
         ng-init="sidebarVisible=false"
         ng-click="sidebarVisible = !sidebarVisible">
-        <div class="portrait hero-novice">
-          <span class="level">{{hero.level}}</span>
-        </div>
-        <div class="toggle-button">[+]</div>
-        <div class="details">
-          <div class="attributes">
-            <span class="attr xp">
-              <span class="xp-bar" style="width: {{xpBarPercent()}}%"></span>
-            </span>
-            <span class="attr keys">{{hero.attributes.keys}}</span>
-            <span class="attr coins">{{hero.attributes.coins}}</span>
-            <span class="attr stars">{{hero.attributes.stars}}</span>
-            <br/>
-            <span class="attr hp">{{hero.attributes.hp}}</span>
-            <span class="attr atk">{{hero.attributes.atk}}</span>
-            <span class="attr def">{{hero.attributes.def}}</span>
-            <span class="attr spd">{{hero.attributes.spd}}</span>
+        <li class="blue">
+          <div class="portrait {{hero.id}}">
+            <span class="level">{{hero.level}}</span>
           </div>
-			  </div>
-      </div>
+          <div class="details">
+            <div class="line">
+              <span class="attr xp">
+                <span class="xp-bar" style="width: {{xpBarPercent()}}%"></span>
+              </span>
+              <span class="attr keys">{{hero.attributes.keys}}</span>
+              <span class="attr coins">{{hero.attributes.coins}}</span>
+              <span class="attr stars">{{hero.attributes.stars}}</span>
+            </div>
+            <div class="line">
+              <span class="attr hp">{{hero.attributes.hp}}</span>
+              <span class="attr atk">{{hero.attributes.atk}}</span>
+              <span class="attr def">{{hero.attributes.def}}</span>
+              <span class="attr spd">{{hero.attributes.spd}}</span>
+            </div>
+  			  </div>
+        </li>
+      </ul>
 
-      <ul class="col dungeon">
+      <ul class="col dungeon btns">
 
         <li ng-repeat="e in dungeon.events track by $index"
-            class="{{e.type}}"
-            ng-class="{disabled: !isAvailable(e)}"
+            class="{{eventColor(e)}}"
             ng-mouseover="highlight(e)"
             ng-click="activate(e)">
 
@@ -178,56 +183,30 @@
             <span class="level" ng-if="e.type == 'monster'">{{e.monster.level}}</span>
           </div>
 
+          <ul class="attributes" ng-if="e.type == 'monster' || e.type == 'boss'">
+            <li class="attr hp">{{e.monster.attributes.hp}}</li>
+            <li class="attr atk">{{e.monster.attributes.atk}}</li>
+            <li class="attr def">{{e.monster.attributes.def}}</li>
+            <li class="attr spd">{{e.monster.attributes.spd}}</li>
+          </ul>
+
+          <div ng-if="e.loot != null" class="loot sm {{e.loot.id}}"></div>
+
+          <div ng-if="e.item != null" class="loot {{e.item.id}}"></div>
+
           <div class="details" ng-switch="e.type">
 
-            <div ng-switch-when="monster">
+            <div ng-if="e.combat != null">
               <div class="cost hp">{{e.combat.totalDamageToHero}}
                 <span class="combat-turns">({{e.combat.numberOfHeroTurns}} turns)</span>
               </div>
-
-              <div class="loot {{e.loot.id}}" ng-if="e.loot != null">
-              </div>
-
-              <ul class="attributes">
-                <li class="attr hp">{{e.monster.attributes.hp}}</li>
-                <li class="attr atk">{{e.monster.attributes.atk}}</li>
-                <li class="attr def">{{e.monster.attributes.def}}</li>
-                <li class="attr spd">{{e.monster.attributes.spd}}</li>
-              </ul>
             </div>
 
-            <div ng-switch-when="merchant">
+            <div ng-if="e.cost != null">
               <fmd-cost cost="e.cost"></fmd-cost>
-              <div class="loot {{e.item.id}}"></div>
-            </div>
-
-            <div ng-switch-when="chest">
-              <fmd-cost cost="e.cost"></fmd-cost>
-              <div class="loot {{e.item.id}}"></div>
-            </div>
-
-            <div ng-switch-when="trap">
-              <fmd-cost cost="e.cost"></fmd-cost>
-              <div class="loot {{e.item.id}}"></div>
             </div>
 
             <div ng-switch-when="character">character</div>
-
-            <div ng-switch-when="boss">
-              <div class="cost hp">{{e.combat.totalDamageToHero}}
-                <span class="combat-turns">({{e.combat.numberOfHeroTurns}} turns)</span>
-              </div>
-
-              <div class="loot {{e.loot.id}}" ng-if="e.loot != null">
-              </div>
-
-              <ul class="attributes">
-                <li class="attr hp">{{e.monster.attributes.hp}}</li>
-                <li class="attr atk">{{e.monster.attributes.atk}}</li>
-                <li class="attr def">{{e.monster.attributes.def}}</li>
-                <li class="attr spd">{{e.monster.attributes.spd}}</li>
-              </ul>
-            </div>
 
           </div>
         </li>
@@ -245,10 +224,7 @@
             <span class="skill-cost" ng-if="skill.stars == 2">&#xe620;&#xe620;</span>
             <p>{{skill.description}}</p>
           </li>
-        </ul>
-
-        <ul class="skills" ng-if="hover != null">
-          <li class="mouseover gray">
+          <li ng-if="hover != null" class="mouseover gray">
             <h4>{{hover.name}}</h4>
             <p>{{hover.description}}</p>
           </li>
@@ -264,10 +240,10 @@
 
   <script src="js/utils.js"></script>
   <script src="js/Game.js"></script>
+  <script src="js/skills.js"></script>
   <script src="js/hero.js"></script>
   <script src="js/monsters.js"></script>
   <script src="js/items.js"></script>
-  <script src="js/skills.js"></script>
   <script src="js/dungeon.js"></script>
   <script src="js/bosses.js"></script>
   <script src="js/app.js"></script>

@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Phaser FMD</title>
+  <script src="lib/lodash.min.js"></script>
+  <script src="lib/phaser.min.js"></script>
+
+  <script src="js/phaser/phaser-utils.js"></script>
+  <script src="js/phaser/boot.js"></script>
+  <script src="js/phaser/preloader.js"></script>
+  <script src="js/phaser/fmd-menu.js"></script>
+  <script src="js/phaser/fmd-dungeon.js"></script>
+
+  <script src="js/utils.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/dungeon.js"></script>
+  <script src="js/skills.js"></script>
+  <script src="js/items.js"></script>
+  <script src="js/hero.js"></script>
+  <script src="js/monsters.js"></script>
+  <script src="js/bosses.js"></script>
+
+  <style>
+  @font-face {
+    font-family: 'Chicago';
+    src: url('fonts/chicagoflf-webfont.eot');
+    src: url('fonts/chicagoflf-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/chicagoflf-webfont.woff') format('woff'),
+         url('fonts/chicagoflf-webfont.ttf') format('truetype'),
+         url('fonts/chicagoflf-webfont.svg#chicagoflfregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'FmdIcons';
+    src:url('fonts/icomoon.eot?wbm48j');
+    src:url('fonts/icomoon.eot?#iefixwbm48j') format('embedded-opentype'),
+      url('fonts/icomoon.woff?wbm48j') format('woff'),
+      url('fonts/icomoon.ttf?wbm48j') format('truetype'),
+      url('fonts/icomoon.svg?wbm48j#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  .preloadFont {
+    position: fixed;
+    top: 0px; left: 0px; color: #000;
+    font-size: 32px;
+    font-family: 'Chicago';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  </style>
+</head>
+<body>
+
+<div class="preloadFont">Dungeon &#xe600;</div>
+
+<div id="gameContainer"></div>
+
+<script type="text/javascript">
+window.onload = function() {
+  //  Create your Phaser game and inject it into the gameContainer div.
+  //  We did it in a window.onload event, but you can do it anywhere (requireJS load, anonymous function, jQuery dom ready, - whatever floats your boat)
+  var game = new Phaser.Game(1024, 768, Phaser.AUTO, 'gameContainer');
+  //  Add the States your game has.
+  //  You don't have to do this in the html, it could be done in your Boot state too, but for simplicity I'll keep it here.
+  game.state.add('Boot', FmdGame.Boot);
+  // game.state.add('Preloader', FmdGame.Preloader);
+  game.state.add('MainMenu', FmdGame.MainMenu);
+  // game.state.add('Gallery', FmdGame.Game);
+  // game.state.add('ChooseCharacter', FmdGame.Game);
+  // game.state.add('Colosseum', FmdGame.Game);
+  // game.state.add('Customize', FmdGame.Game);
+  // game.state.add('About', FmdGame.Game);
+
+  game.state.add('Dungeon', FmdGame.Dungeon);
+
+  //  Now start the Boot state.
+  game.state.start('Boot');
+};
+</script>
+
+</body>
+</html>

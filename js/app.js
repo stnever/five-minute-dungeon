@@ -77,6 +77,15 @@ function DungeonController( $scope ) {
 
 	$scope.Game = Game;
 
+	$scope.eventColor = function(event) {
+		if ( ! $scope.isAvailable(event) ) return 'black';
+		if ( event.type == 'boss' ) return 'pink';
+		if ( event.type == 'chest' ) return 'green';
+		if ( event.type == 'merchant' ) return 'orange';
+		if ( event.type == 'trap' ) return 'orange';
+		return 'brown';
+	}
+
 	$scope.isAvailable = function(event) {
 		if ( event.type == 'monster' || event.type == 'boss' )
 			return event.combat.attackable;
@@ -91,14 +100,14 @@ function DungeonController( $scope ) {
 	$scope.enterDungeon = function() {
 
 		$scope.Game.state = 'dungeon';
-		enterDungeon(Game.gallery.heroClasses[0].create(), randomDungeonGenerator);
+		enterDungeon(Game.gallery.heroClasses[0], randomDungeonGenerator);
 		$scope.dungeon = Game.dungeon;
 		$scope.hero = $scope.dungeon.hero;
 	}
 
 	$scope.portraitClass = function(e) {
-		if ( e.type == 'monster' ) return 'monster-' + e.monster.id;
-		if ( e.type == 'boss' ) return 'boss-' + e.monster.id;
+		if ( e.type == 'monster' || e.type == 'boss')
+			return e.monster.id;
 		return e.type;
 	}
 

@@ -1,6 +1,7 @@
 // This function takes the hero and sets up the dungeon,
 // plugging all listeners to make the game run.
-function enterDungeon(hero, dungeonGenerator) {
+function enterDungeon(heroClass, dungeonGenerator) {
+  var hero = instantiate(heroClass);
   var dungeon = Game.dungeon = {
     hero: hero,
     events: [],
@@ -56,7 +57,7 @@ function enterDungeon(hero, dungeonGenerator) {
   var newEvents = _.flatten(_.times(20, dungeon.generatorFn));
   Array.prototype.push.apply(Game.dungeon.events, newEvents);
   newEvents.forEach(function(e) {
-    Game.trigger('dungeon-event-appear')
+    Game.trigger('dungeon-event-appear', e);
   })
 
   // ...and call it once every time an event is discarded, up
@@ -65,7 +66,7 @@ function enterDungeon(hero, dungeonGenerator) {
     var newEvents = dungeon.generatorFn();
     Array.prototype.push.apply(Game.dungeon.events, newEvents);
     newEvents.forEach(function(e) {
-      Game.trigger('dungeon-event-appear', e)
+      Game.trigger('dungeon-event-appear', e);
     })
   })
 
@@ -100,7 +101,6 @@ function randomDungeonGenerator() {
   // will be created later.
   if ( Game.dungeon.bossPositions == null ) {
     var bossIds = _.chain(Game.gallery.bossClasses).pluck('id').shuffle().value();
-    console.log(bossIds);
     Game.dungeon.bossPositions = bossIds.map(function(id, i) {
       return {
         id: id,
