@@ -22,6 +22,10 @@
   <script src="js/bosses.js"></script>
 
   <style>
+  body {
+    background-color: #000;
+  }
+
   @font-face {
     font-family: 'Chicago';
     src: url('fonts/chicagoflf-webfont.eot');
@@ -44,11 +48,28 @@
     font-style: normal;
   }
 
-  .preloadFont {
+  .preloadFont1 {
     position: fixed;
-    top: 0px; left: 0px; color: #000;
+    top: 0px; left: 0px; color: rgba(0,0,0,0);
     font-size: 32px;
     font-family: 'Chicago';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .preloadFont2 {
+    position: fixed;
+    top: 0px; left: 0px; color: rgba(0,0,0,0);
+    font-size: 32px;
+    font-family: 'FmdIcons';
     speak: none;
     font-style: normal;
     font-weight: normal;
@@ -64,7 +85,8 @@
 </head>
 <body>
 
-<div class="preloadFont">Dungeon &#xe600;</div>
+<div class="preloadFont1">Dungeon</div>
+<div class="preloadFont2">&#xe600;</div>
 
 <div id="gameContainer"></div>
 
