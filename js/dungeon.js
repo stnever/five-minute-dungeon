@@ -1,32 +1,29 @@
 // This function takes the hero and sets up the dungeon,
 // plugging all listeners to make the game run.
 function enterDungeon(heroClass, dungeonGenerator) {
-  var hero = instantiate(heroClass);
+
   var dungeon = Game.dungeon = {
-    hero: hero,
     events: [],
 
     // Standard loot frequencies.
-    frequencies: {
-      loot: {
-        'nothing': 10,
-        'gem-red': 3,
-        'gem-blue': 3,
-        'gem-green': 3,
-        'gem-silver': 1,
-        'coin-copper': 5,
-        'coin-silver': 3,
-        'coin-gold': 1
-      },
+    lootTable: new LootTable({
+      'nothing': 10,
+      'gem-red': 3,
+      'gem-blue': 3,
+      'gem-green': 3,
+      'gem-silver': 1,
+      'coin-copper': 5,
+      'coin-silver': 3,
+      'coin-gold': 1
+    }),
 
-      // Standard event frequencies.
-      events: {
-        monster: 130,
-        merchant: 20,
-        chest: 10,
-        trap: 1
-      }
-    },
+    // Standard event frequencies.
+    eventsTable: new LootTable({
+      monster: 130,
+      merchant: 20,
+      chest: 10,
+      trap: 1
+    }),
 
     // The current age of the dungeon (number of events added)
     age: 0,
@@ -34,21 +31,10 @@ function enterDungeon(heroClass, dungeonGenerator) {
     generatorFn: dungeonGenerator
   }
 
-  dungeon.eventsSampler = sampler(dungeon.frequencies.events);
-  dungeon.lootSampler = sampler(dungeon.frequencies.loot);
+  // Creates the hero after the dungeon so that skills that modify
+  // loot frequencies (e.g. "Lucky") may run.
+  dungeon.hero = instantiate(heroClass);
 
-  // Whenever a hero enters the dungeon, plug all the listeners
-  // from all her skills.
-  hero.skills.forEach(function(skill) {
-    _.functions(skill).forEach(function(fnName) {
-      var gameEventName = _.kebabCase(fnName.replace(/^on/, ''));
-      var fn = skill[fnName];
-      Game.on(gameEventName, fn);
-    });
-  });
-
-  // Trigger the enter-dungeon event, so that skills that modify
-  // the drop and event frequencies may run.
   Game.trigger('enter-dungeon');
 
   // Each call to the dungeon-generator function produces zero
@@ -81,70 +67,67 @@ function enterDungeon(heroClass, dungeonGenerator) {
 
 }
 
-// This is a dungeon generator function that uses the frequency
-// data from the dungeon object, and also places bosses in the
-// approximate location.
+// This is a dungeon generator function that uses event-type and
+// loot tables from the dungeon object, and also places bosses
+// in the appropriate location.
 function randomDungeonGenerator() {
 
-  if ( Game.dungeon.monsterSampler == null ) {
-    // Sets up the monster sampler the first time this is run. Each
+  if ( Game.dungeon.monsterTable == null ) {
+    // Sets up the monster table the first time this is run. Each
     // dungeon run can use up to 3 different monster classes.
-    var allowedMonsterClasses = _.sample(Game.gallery.monsterClasses, 3);
-    console.log('monsterClasses: %s, %s, %s',
-      allowedMonsterClasses[0].id, allowedMonsterClasses[1].id, allowedMonsterClasses[2].id)
-    Game.dungeon.monsterSampler = function() {
-      return _.sample(allowedMonsterClasses);
-    }
+    var allowedMonsterClasses =
+      _.chain(Game.gallery.monsterClasses).sample(3).pluck('id').value();
+    Game.dungeon.monsterTable = new LootTable(allowedMonsterClasses);
   }
 
   // Sets up the position and level of each boss. The bosses themselves
-  // will be created later.
+  // will be created later. Note that this DungeonGenerator always places
+  // the SkeletonKing and Skuleton at the end.
   if ( Game.dungeon.bossPositions == null ) {
-    var bossIds = _.chain(Game.gallery.bossClasses).pluck('id').shuffle().value();
+    var bossIds = _.chain(Game.gallery.bossClasses)
+      .pluck('id').without('skeleton-king', 'skuleton').shuffle().value();
     Game.dungeon.bossPositions = bossIds.map(function(id, i) {
       return {
         id: id,
-        level: i,
+        level: i+1,
         position: 40 + (i * 10) + _.random(-5, 5)
       }
     })
-    // Game.dungeon.bossPositions = [
-    //   {id: 'knight-yellow', level: 1, position: 1},
-    //   {id: 'knight-red', level: 2, position: 2},
-    //   {id: 'knight-blue', level: 3, position: 3},
-    //   {id: 'knight-green', level: 4, position: 4},
-    //   {id: 'demon', level: 5, position: 5},
-    //   {id: 'cait-sith', level: 6, position: 6},
-    //   {id: 'wailing-wall', level: 7, position: 7},
-    //   {id: 'skeleton-king', level: 8, position: 8},
-    //   {id: 'skuleton', level: 5, position: 9}
-    // ]
+
+    Game.dungeon.bossPositions.push({
+      id: 'skeleton-king', level: 22,
+      position: _.last(Game.dungeon.bossPositions).position + 10
+    })
+
+    Game.dungeon.bossPositions.push({
+      id: 'skuleton', level: _.random(1, 20),
+      position: _.last(Game.dungeon.bossPositions).position + 1
+    })
+
   }
 
   var events = [];
 
   // Uses the event frequency to build the event object.
   var event = {
-    type: Game.dungeon.eventsSampler()
+    type: Game.dungeon.eventsTable.roll()
   }
-
 
   // Checks if a boss should appear now and overrides the type above.
   if ( Game.dungeon.bossPositions.length > 0 &&
-       Game.dungeon.bossPositions[0].position == Game.dungeon.age ) {
+       Game.dungeon.bossPositions[0].position <= Game.dungeon.age ) {
     var bp = Game.dungeon.bossPositions[0];
     Game.dungeon.bossPositions.splice(0, 1);
     event.type = 'boss';
     var bossClass = _.find(Game.gallery.bossClasses, {id: bp.id});
-    console.log(bossClass);
-    createBoss(event, bossClass, bp.level, Game.dungeon.lootSampler);
+    createBoss(event, bossClass, bp.level, Game.dungeon.lootTable);
   }
 
-
   if ( event.type == 'monster' ) {
-    var monsterClass = Game.dungeon.monsterSampler();
+    var monsterClassId = Game.dungeon.monsterTable.roll();
+    var monsterClass = _.find(Game.gallery.monsterClasses, {id: monsterClassId});
     var level = Math.floor(Game.dungeon.age / (130/20)) +1;
-    createMonster(event, monsterClass, level, Game.dungeon.lootSampler);
+    createMonster(event, monsterClass, level, Game.dungeon.lootTable);
   } else if ( event.type == 'merchant' ) {
     createMerchant(event, Game.dungeon.age);
   } else if ( event.type == 'chest' ) {
@@ -156,18 +139,17 @@ function randomDungeonGenerator() {
   events.push(event);
   Game.dungeon.age++;
 
-  // Coloca bosses em posições específicas
-  // addBosses(events)
-
   return events;
 }
 
-function createBoss(event, bossClass, level, lootSampler) {
+function createBoss(event, bossClass, level, lootTable) {
 
   event.monster = instantiate(bossClass, level);
 
-  // Loot
-  var loot = lootSampler();
+  // If the boss has a loot table of his own, use it; if not,
+  // use the standard dungeon loot table.
+  var table = event.monster.lootTable || lootTable;
+  var loot = table.roll();
   if ( loot != 'nothing' ) {
     event.loot = _.clone(_.find(Game.gallery.loot, {id: loot}));
   }
@@ -178,12 +160,12 @@ function createBoss(event, bossClass, level, lootSampler) {
   return event;
 }
 
-function createMonster(event, monsterClass, level, lootSampler) {
+function createMonster(event, monsterClass, level, lootTable) {
 
   event.monster = instantiate(monsterClass, level);
 
   // Loot
-  var loot = lootSampler();
+  var loot = lootTable.roll();
   if ( loot != 'nothing' ) {
     event.loot = _.clone(_.find(Game.gallery.loot, {id: loot}));
   }
@@ -355,11 +337,13 @@ function pay(hero, cost) {
 }
 
 // This function receives a "class object" (hero, monster, or boss) and
-// creates a new object of that class. All properties of the class are
-// cloned and copies to the object. Methods that begin with "on" (such
-// as "onHeroModified") are assumed to be listeners and are registered
-// appropriately. Finally, if there is a "create()" method on the class,
-// it is called passing the object as the first parameter.
+// creates a new object of that class following these steps:
+// 1. All properties of the class are cloned and copied to the object.
+// 2. Methods that begin with `on` (such as `onHeroModified`) are
+// assumed to be listeners and are registered appropriately.
+// 3. If the class has a `skills` list, run step 2 above for every skill.
+// 4. Finally, if the class has a `create()` method, it will called
+// passing the object-being-built as the first parameter.
 var instantiate = function(theClass, level) {
   var object = {level: level};
 
@@ -374,6 +358,18 @@ var instantiate = function(theClass, level) {
 
     Game.on(gameEventName, fn);
   })
+
+  if ( theClass.skills ) {
+    theClass.skills.forEach(function(skill) {
+      _.functions(skill).forEach(function(fnName) {
+        var gameEventName = _.kebabCase(fnName.replace(/^on/, ''));
+
+        // "this" inside the listener becomes the skill object.
+        var fn = _.bind(skill[fnName], skill);
+        Game.on(gameEventName, fn);
+      });
+    });
+  }
 
   if ( theClass.create )
     theClass.create(object);

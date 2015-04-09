@@ -101,6 +101,10 @@ function DungeonController( $scope ) {
 
 		$scope.Game.state = 'dungeon';
 		enterDungeon(Game.gallery.heroClasses[0], randomDungeonGenerator);
+
+		console.log('monsters', Game.dungeon.monsterTable.freqs);
+		console.log('bosses', Game.dungeon.bossPositions);
+
 		$scope.dungeon = Game.dungeon;
 		$scope.hero = $scope.dungeon.hero;
 	}

@@ -24,26 +24,45 @@ function allZeroes(obj) {
   }, true);
 }
 
-// Given an object with values and their frequencies (for example,
-// {heads: 1, tails: 2}), returns a function -- the sampler -- that,
-// when called, produces one of the values.
-function sampler(frequencies) {
-  var spectrum = [], max = 0;
-  _.forOwn(frequencies, function(freqValue, freqKey) {
+// A simple loot table. Each item in the table has a certain
+// frequency (e.g. {heads: 1, tails: 2}). The `roll()` method
+// returns one item at random with that frequency. The table
+// can be updated with the `update()` method.
+function LootTable(newFreqs) {
+  this.freqs = {};
+  this.update(newFreqs);
+}
+
+// This method can accept an object (e.g. {heads:1, tails:2})
+// or an array (e.g. ['heads', 'tails']). If an array is passed,
+// each element will have the same chance to appear.
+LootTable.prototype.update = function(newFreqs) {
+  if ( _.isArray(newFreqs) ) {
+    newFreqs = newFreqs.reduce(function(acc, v) {
+      acc[v] = 1;
+      return acc;
+    }, {});
+  }
+
+  _.assign(this.freqs, newFreqs);
+  var spectrum = this.spectrum = [];
+  var max = this.max = 0;
+
+  _.forOwn(this.freqs, function(freqValue, freqKey) {
     max += freqValue;
     spectrum.push({key: freqKey, limit: max});
   })
 
-  var result = function() {
-    var r = _.random(0, max);
-    for ( var i = 0; i < spectrum.length; i++ ) {
-      if ( spectrum[i].limit >= r )
-      return spectrum[i].key;
-    }
-  }
+  return this;
+}
 
-  result.max = max;
-  return result;
+LootTable.prototype.roll = function() {
+  var r = _.random(0, this.max);
+  for ( var i = 0; i < this.spectrum.length; i++ ) {
+    if ( this.spectrum[i].limit >= r )
+    return this.spectrum[i].key;
+  }
+  return this.spectrum[this.spectrum.length -1].key;
 }
 
 // http://sroucheray.org/blog/2009/11/array-sort-should-not-be-used-to-shuffle-an-array/

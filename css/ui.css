@@ -152,6 +152,7 @@ h1 {
 
 /* Utilities ======================================= */
 .portrait    {
+  vertical-align: top;
   height: 56px;
   width: 56px;
   background-size: 56px;
@@ -206,8 +207,8 @@ h1 {
 
 .btns .details {
   display: inline-block;
-  position: absolute;
-  top: 0px;
+  vertical-align: top;
+  width: calc(100% - 64px);
   padding: 0px;
   font-size: 20px;
 }
@@ -239,6 +240,7 @@ h1 {
 .hero-bar .details {
   height: 100%;
   margin-left: 20px;
+  width: calc(100% - 84px);
 }
 
 .hero-bar .line {
