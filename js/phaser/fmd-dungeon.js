@@ -35,7 +35,7 @@ FmdGame.Dungeon.prototype = {
     var me = this;
 
     // Instantiate a hero.
-    var hero = Game.gallery.heroClasses[0].create()
+    var heroClass = Game.gallery.heroClasses[0];
 
     var list = new List(this, 2);
     list.group.x = (this.game.width / 2 ) - 300;
@@ -58,7 +58,7 @@ FmdGame.Dungeon.prototype = {
     })
 
     // Add the hero and several events to the dungeon.
-    enterDungeon(hero, randomDungeonGenerator);
+    enterDungeon(heroClass, randomDungeonGenerator);
 
     // Draw the hero bar.
     // this.addHeroBar();

@@ -18,7 +18,7 @@ FmdGame.MainMenu.prototype = {
 
     var menu = new List(this, 10);
 
-    var m1 = new ListItem(this.game, 'li-normal', 'g1-red', 0xFF49A4)
+    var m1 = new ListItem(this.game, 'li-normal', 'skeleton-king', 0xFF49A4)
       .addText('Dungeon')
       .onClick(function() {
         this.state.start('Dungeon');

@@ -46,11 +46,12 @@ LootTable.prototype.update = function(newFreqs) {
 
   _.assign(this.freqs, newFreqs);
   var spectrum = this.spectrum = [];
-  var max = this.max = 0;
+  this.max = 0;
 
+  var me = this;
   _.forOwn(this.freqs, function(freqValue, freqKey) {
-    max += freqValue;
-    spectrum.push({key: freqKey, limit: max});
+    me.max += freqValue;
+    me.spectrum.push({key: freqKey, limit: me.max});
   })
 
   return this;
