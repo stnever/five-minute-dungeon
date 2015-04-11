@@ -17,7 +17,7 @@ Game.gallery.heroClasses.push({
 
     coins: 37,
     keys: 3,
-    stars: 33
+    stars: 3
   },
 
   limits: {

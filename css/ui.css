@@ -194,6 +194,8 @@ h1 {
   font-size: 0px;
 }
 
+.btns > li.clickable:not(.disabled):active { top: 3px; }
+
 .btns h3 {
   margin: 0px;
   padding: 0px 0px 0px 10px;

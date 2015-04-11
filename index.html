@@ -183,7 +183,7 @@
       <ul class="col dungeon btns">
 
         <li ng-repeat="e in dungeon.events track by $index"
-            class="{{eventColor(e)}}"
+            class="{{eventColor(e)}} clickable"
             ng-mouseover="highlight(e)"
             ng-click="activate(e)">
 
@@ -206,7 +206,7 @@
 
             <div ng-if="e.combat != null">
               <div class="cost hp">{{e.combat.totalDamageToHero}}
-                <span class="combat-turns">({{e.combat.numberOfHeroTurns}} turns)</span>
+                <!-- <span class="combat-turns">({{e.combat.numberOfHeroTurns}} turns)</span> -->
               </div>
             </div>
 
