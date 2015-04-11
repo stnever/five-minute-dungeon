@@ -33,6 +33,9 @@ app.directive('fmdCost', function() {
 			cost: '='
 		},
 		link: function(scope, elem, attrs) {
+
+			console.log('link', scope.cost);
+
 			scope.costs = kvs(_.omit(scope.cost, function(v) {
 				return v == 0 || v == null
 			}));
@@ -95,6 +98,12 @@ function DungeonController( $scope ) {
 
 	$scope.activate = function(e) {
 		Game.activateDungeonEvent(e);
+	}
+
+	$scope.isAtLimit = function(attr) {
+		var v = $scope.hero.attributes[attr];
+		var l = $scope.hero.limits[attr];
+		return ( v == l.min || v == l.max );
 	}
 
 	$scope.enterDungeon = function() {

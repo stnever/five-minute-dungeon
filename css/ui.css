@@ -287,12 +287,14 @@ h1 {
 }
 
 .skills > li h4 {
-	font-size: 30px;
+	font-size: 23px;
+  color: #fff;
 	margin: 0; padding: 0;
 }
 
 .skills > li p {
-	font-size: 20px;
+	font-size: 18px;
+  color: #eee;
 	margin: 0; padding: 0;
 }
 
@@ -324,7 +326,8 @@ h1 {
   position: relative;
   top: 11px;
   height: 36px;
-  font-size: 20px;
+  font-size: 25px;
+  line-height: 36px;
 }
 
 .cost.free:before {
@@ -441,9 +444,10 @@ ul.attributes li { list-style-type: none; }
   position: absolute;
   top: 0px;
   left: 0px;
-  font-size: 9pt;
+  font-size: 12px;
   line-height: 1em;
   font-family: Arial Black;
+  color: #fff;
   opacity: 0.7;
 }
 
