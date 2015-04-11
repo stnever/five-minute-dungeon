@@ -11,7 +11,7 @@ function enterDungeon(heroClass, dungeonGenerator) {
       'gem-red': 3,
       'gem-blue': 3,
       'gem-green': 3,
-      'gem-silver': 1,
+      'gem-silver': 2,
       'coin-copper': 5,
       'coin-silver': 3,
       'coin-gold': 1
