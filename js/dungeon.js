@@ -20,7 +20,7 @@ function enterDungeon(heroClass, dungeonGenerator) {
     // Standard event frequencies.
     eventsTable: new LootTable({
       monster: 130,
-      merchant: 20,
+      merchant: 15,
       chest: 10,
       trap: 1
     }),
