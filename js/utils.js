@@ -3,7 +3,7 @@
 // between(100, 120, 5); -> 100, 105, 110, 115, 120
 function between(startInclusive, endInclusive, step) {
   if ( step == null ) step = 1;
-  var maxSteps = endInclusive - startInclusive / step;
+  var maxSteps = (endInclusive - startInclusive) / step;
 
   return startInclusive +
     ((Math.floor(Math.random() * maxSteps)) * step);

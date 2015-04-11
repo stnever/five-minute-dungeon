@@ -25,6 +25,15 @@ function enterDungeon(heroClass, dungeonGenerator) {
       trap: 1
     }),
 
+    // Default attribute limits. These are only applied if a
+    // monster/boss/hero does not provide its own.
+    defaultLimits: {
+      hp: 1600,
+      atk: 255,
+      def: 255,
+      spd: 6
+    },
+
     // The current age of the dungeon (number of events added)
     age: 0,
     maxAge: 130,
@@ -109,46 +118,43 @@ function randomDungeonGenerator() {
   var events = [];
 
   // Uses the event frequency to build the event object.
-  var event = {
-    type: Game.dungeon.eventsTable.roll()
-  }
+  var type = Game.dungeon.eventsTable.roll()
 
   // Checks if a boss should appear now and overrides the type above.
   if ( Game.dungeon.bossPositions.length > 0 &&
        Game.dungeon.bossPositions[0].position <= Game.dungeon.age ) {
     var bp = Game.dungeon.bossPositions[0];
     Game.dungeon.bossPositions.splice(0, 1);
-    event.type = 'boss';
     var bossClass = _.find(Game.gallery.bossClasses, {id: bp.id});
-    createBoss(event, bossClass, bp.level, Game.dungeon.lootTable);
+    var event = createBoss(bossClass, bp.level);
   }
 
-  if ( event.type == 'monster' ) {
-    var monsterClassId = Game.dungeon.monsterTable.roll();
-    var monsterClass = _.find(Game.gallery.monsterClasses, {id: monsterClassId});
-    var level = Math.floor(Game.dungeon.age / (130/20)) +1;
-    createMonster(event, monsterClass, level, Game.dungeon.lootTable);
-  } else if ( event.type == 'merchant' ) {
-    createMerchant(event, Game.dungeon.age);
-  } else if ( event.type == 'chest' ) {
-    createChest(event, Game.dungeon.age);
-  } else if ( event.type == 'trap' ) {
-    createTrap(event, Game.dungeon.age);
+  if ( type == 'monster' ) {
+    events.push(createMonster());
+  } else if ( type == 'merchant' ) {
+    events.push(createMerchant());
+    Game.dungeon.age++;
+    events.push(createMonster());
+  } else if ( type == 'chest' ) {
+    events.push(createChest());
+  } else if ( type == 'trap' ) {
+    events.push(createTrap());
   }
 
-  events.push(event);
   Game.dungeon.age++;
 
   return events;
 }
 
-function createBoss(event, bossClass, level, lootTable) {
-
-  event.monster = instantiate(bossClass, level);
+function createBoss(bossClass, level) {
+  var event = {
+    type: 'monster',
+    monster: instantiate(bossClass, level)
+  }
 
   // If the boss has a loot table of his own, use it; if not,
   // use the standard dungeon loot table.
-  var table = event.monster.lootTable || lootTable;
+  var table = event.monster.lootTable || Game.dungeon.lootTable;
   var loot = table.roll();
   if ( loot != 'nothing' ) {
     event.loot = _.clone(_.find(Game.gallery.loot, {id: loot}));
@@ -160,12 +166,21 @@ function createBoss(event, bossClass, level, lootTable) {
   return event;
 }
 
-function createMonster(event, monsterClass, level, lootTable) {
+function createMonster() {
 
-  event.monster = instantiate(monsterClass, level);
+  var monsterClassId = Game.dungeon.monsterTable.roll();
+  var monsterClass = _.find(Game.gallery.monsterClasses, {id: monsterClassId});
+  var level = Math.floor(Game.dungeon.age / (130/20)) +1;
+
+  var event = {
+    type: 'monster',
+    monster: instantiate(monsterClass, level)
+  }
+
+  checkLimits(event.monster);
 
   // Loot
-  var loot = lootTable.roll();
+  var loot = Game.dungeon.lootTable.roll();
   if ( loot != 'nothing' ) {
     event.loot = _.clone(_.find(Game.gallery.loot, {id: loot}));
   }
@@ -176,19 +191,24 @@ function createMonster(event, monsterClass, level, lootTable) {
   return event;
 }
 
-function createMerchant(event, age) {
-  event.item = _.clone(_.sample(Game.gallery.items));
+function createMerchant() {
+  var event = {
+    type: 'merchant',
+    item: _.clone(_.sample(Game.gallery.items))
+  }
   event.cost = { coins: event.item.coins };
   return event;
 }
 
-function createChest(event, age) {
+function createChest() {
+  var event = { type: 'chest' };
   event.item = _.clone(_.sample(Game.gallery.items));
   event.cost = { keys: 1 };
   return event;
 }
 
-function createTrap(event, age) {
+function createTrap() {
+  var event = { type: 'trap' }
   // Traps only contain high level items.
   event.item = _.chain(Game.gallery.items)
     .filter(function(i) { return i.coins >= 22 })
@@ -225,8 +245,8 @@ Game.activateDungeonEvent = function(event) {
     Game.trigger('item-acquired', event.item, event);
 
     // Pays the cost and acquires the item.
-    pay(hero, event.cost);
-    gain(hero, event.item.gain);
+    modifyAttributes(hero, invert(event.cost));
+    modifyAttributes(hero, event.item.gain);
 
   } else {
 
@@ -240,9 +260,9 @@ Game.activateDungeonEvent = function(event) {
 
     // Pays the HP cost of defeating a monster and
     // acquires the loot, if any.
-    pay(hero, {hp: combat.totalDamageToHero});
+    modifyAttributes(hero, {hp: -combat.totalDamageToHero});
     if ( event.loot )
-      gain(hero, event.loot.gain);
+      modifyAttributes(hero, event.loot.gain);
 
     // Broadcasts that a monster has been killed.
     Game.trigger('monster-kill', event.monster);
@@ -261,8 +281,8 @@ Game.activateSkill = function(skill) {
   if ( !canPay(hero, cost) )
     return;
 
-  pay(hero, cost);
-  gain(hero, skill.gain);
+  modifyAttributes(hero, invert(cost));
+  modifyAttributes(hero, skill.gain);
 }
 
 function calculateCombat( monster, hero ) {
@@ -297,23 +317,27 @@ function calculateCombat( monster, hero ) {
   return result;
 }
 
-function gain(hero, gains) {
-  _.forOwn(gains, function(value, key) {
+function modifyAttributes(hero, deltas) {
+  _.forOwn(deltas, function(value, key) {
     if ( _.isFunction(value)) value = value(hero);
     hero.attributes[key] += value;
-
-    if ( hero.attributes[key] > hero.limits[key] )
-      hero.attributes[key] = hero.limits[key];
-
-    if ( key == 'hp' && hero.attributes.hp < 1 )
-      hero.attributes.hp = 1;
-    else if ( hero.attributes[key] < 0 )
-      hero.attributes[key] = 0;
   })
+
+  checkLimits(hero);
 
   // TODO gain skills (used by events of type 'old-hero')
 
   Game.trigger('hero-modified');
+}
+
+function checkLimits(character) {
+  var att = character.attributes;
+  var lim = character.limits || Game.dungeon.defaultLimits;
+  _.forOwn(character.attributes, function(value, key) {
+    if ( lim[key] == null) return;
+    if ( att[key] < lim[key].min ) att[key] = lim[key].min;
+    if ( att[key] > lim[key].max ) att[key] = lim[key].max;
+  });
 }
 
 function canPay(hero, cost) {
@@ -327,14 +351,12 @@ function canPay(hero, cost) {
   }, true)
 }
 
-function pay(hero, cost) {
-  _.forOwn(cost, function(value, key) {
-    if ( _.isFunction(value) ) value = value(hero);
-    hero.attributes[key] -= value;
+function invert(deltas) {
+  return _.mapValues(deltas, function(value) {
+    return -value;
   })
-
-  Game.trigger('hero-modified');
 }
+
 
 // This function receives a "class object" (hero, monster, or boss) and
 // creates a new object of that class following these steps:

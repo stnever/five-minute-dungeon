@@ -17,14 +17,14 @@ Game.gallery.heroClasses.push({
 
     coins: 37,
     keys: 3,
-    stars: 3
+    stars: 33
   },
 
   limits: {
-    hp: between(1000, 2000, 100),
-    atk: between(200, 255, 5),
-    def: between(200, 255, 5),
-    speed: between(7,9)
+    hp : { min: 1, max: between(1000, 2000, 100) },
+    atk: { min: 0, max: between(200, 255, 5) },
+    def: { min: 0, max: between(200, 255, 5) },
+    spd: { min: between(7,9), max: 255 }
   },
 
   skills: [

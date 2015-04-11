@@ -163,10 +163,18 @@
               <span class="attr stars">{{hero.attributes.stars}}</span>
             </div>
             <div class="line">
-              <span class="attr hp">{{hero.attributes.hp}}</span>
-              <span class="attr atk">{{hero.attributes.atk}}</span>
-              <span class="attr def">{{hero.attributes.def}}</span>
-              <span class="attr spd">{{hero.attributes.spd}}</span>
+              <span class="attr hp">{{hero.attributes.hp}}
+                <span style="margin: -6px" ng-if="isAtLimit('hp')">!</span>
+              </span>
+              <span class="attr atk">{{hero.attributes.atk}}
+                <span style="margin: -6px" ng-if="isAtLimit('atk')">!</span>
+              </span>
+              <span class="attr def">{{hero.attributes.def}}
+                <span style="margin: -6px" ng-if="isAtLimit('def')">!</span>
+              </span>
+              <span class="attr spd">{{hero.attributes.spd}}
+                <span style="margin: -6px" ng-if="isAtLimit('spd')">!</span>
+              </span>
             </div>
   			  </div>
         </li>
@@ -203,7 +211,10 @@
             </div>
 
             <div ng-if="e.cost != null">
-              <fmd-cost cost="e.cost"></fmd-cost>
+              <div class="cost keys" ng-if="e.cost.keys > 0"></div>
+              <div class="cost coins" ng-if="e.cost.coins > 0">{{e.cost.coins}}</div>
+              <div class="cost hp" ng-if="e.cost.hp > 0">{{e.cost.hp}}</div>
+              <div class="cost free" ng-if="isFree()"></div>
             </div>
 
             <div ng-switch-when="character">character</div>
