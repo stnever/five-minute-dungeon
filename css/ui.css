@@ -328,8 +328,9 @@ h1 {
   position: relative;
   top: 11px;
   height: 36px;
-  font-size: 25px;
+  font-size: 20px;
   line-height: 36px;
+  font-family: 'Arial Black';
 }
 
 .cost.free:before {
@@ -580,4 +581,13 @@ ul.attributes li { list-style-type: none; }
   font-size: 20px;
   padding: 0 10px;
   margin: 0 4px 0 0;
+}
+
+.debug {
+  opacity: 0.6;
+  font-family: Courier;
+  font-size: 8pt;
+  white-space: pre;
+  position: absolute;
+  color: #fff;
 }

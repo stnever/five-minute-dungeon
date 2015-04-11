@@ -28,10 +28,10 @@ Game.gallery.heroClasses.push({
   },
 
   skills: [
-  	{name: 'upgrade1', type: 'level-up', stars: 1, gain: { hp: +100 }},
-  	{name: 'upgrade2', type: 'level-up', stars: 1, gain: { atk: +4 }},
-  	{name: 'upgrade3', type: 'level-up', stars: 1, gain: { def: +4 }},
-  	{name: 'upgrade4', type: 'level-up', stars: 1, gain: { spd: -2 }},
+  	{name: 'upgrade1', type: 'level-up', stars: 1, gain: { hp: +1000 }},
+  	{name: 'upgrade2', type: 'level-up', stars: 1, gain: { atk: +40 }},
+  	{name: 'upgrade3', type: 'level-up', stars: 1, gain: { def: +40 }},
+  	{name: 'upgrade4', type: 'level-up', stars: 1, gain: { spd: -20 }},
 
     _.find(Game.gallery.skills, {id: 'quick-learner'})
   ]

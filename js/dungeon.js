@@ -28,10 +28,10 @@ function enterDungeon(heroClass, dungeonGenerator) {
     // Default attribute limits. These are only applied if a
     // monster/boss/hero does not provide its own.
     defaultLimits: {
-      hp: 1600,
-      atk: 255,
-      def: 255,
-      spd: 6
+      hp : { min: 1, max: 1600 },
+      atk: { min: 0, max: 255 },
+      def: { min: 0, max: 255 },
+      spd: { min: 6, max: 255 }
     },
 
     // The current age of the dungeon (number of events added)
@@ -121,10 +121,16 @@ function randomDungeonGenerator() {
       id: 'skuleton', level: _.random(1, 20),
       position: _.last(Game.dungeon.bossPositions).position + 1
     })
-
   }
 
   var events = [];
+
+  // Check if we reached the max dungeon age. If so, return an
+  // empty list. We also don't add new events if there are two
+  // or more bosses in play.
+  if ( Game.dungeon.age >= Game.dungeon.maxAge ||
+      _.filter(Game.dungeon.events, {type: 'boss'}).length >= 2 )
+    return events;
 
   // Uses the event frequency to build the event object.
   var type = Game.dungeon.eventsTable.roll()
@@ -132,10 +138,11 @@ function randomDungeonGenerator() {
   // Checks if a boss should appear now and overrides the type above.
   if ( Game.dungeon.bossPositions.length > 0 &&
        Game.dungeon.bossPositions[0].position <= Game.dungeon.age ) {
+    type = 'boss';
     var bp = Game.dungeon.bossPositions[0];
     Game.dungeon.bossPositions.splice(0, 1);
     var bossClass = _.find(Game.gallery.bossClasses, {id: bp.id});
-    var event = createBoss(bossClass, bp.level);
+    events.push(createBoss(bossClass, bp.level));
   }
 
   if ( type == 'monster' ) {
@@ -346,7 +353,7 @@ function checkLimits(character) {
   var lim = character.limits || Game.dungeon.defaultLimits;
   _.forOwn(character.attributes, function(value, key) {
     if ( lim[key] == null) return;
-    att[key] = constrain(att[key], lim);
+    att[key] = constrain(att[key], lim[key]);
   });
 }
 

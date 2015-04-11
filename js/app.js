@@ -1,5 +1,11 @@
 var app = angular.module("FiveMinuteDungeon",[/*'velocity.ui', 'ngAnimate'*/]);
 
+app.filter('prettyJson', function() {
+	return function(obj) {
+		return JSON.stringify(obj, null, ' ');
+	}
+})
+
 app.directive('fmdGain', function() {
 	return {
 		restrict: 'E',

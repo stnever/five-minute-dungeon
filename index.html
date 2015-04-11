@@ -34,6 +34,9 @@
   </head>
   <body ng-controller="DungeonController" ng-cloak ng-init="Game.state = 'menu'">
 
+    <div class="debug">{{Game.dungeon.age}}
+{{Game.dungeon.bossPositions | prettyJson}}</div>
+
     <div class="menu-toggle"
       ng-hide="Game.state == 'menu'"
       ng-click="Game.state = 'menu'">
