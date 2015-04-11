@@ -81,6 +81,15 @@ function enterDungeon(heroClass, dungeonGenerator) {
 // in the appropriate location.
 function randomDungeonGenerator() {
 
+  if ( Game.dungeon.monsterLevelVariance == null ) {
+    // Sets up a loot table to add a little variation to the monsters' level.
+    Game.dungeon.monsterLevelVariance = new LootTable({
+      '+1': 1,
+      '0': 2,
+      '-1': 1
+    })
+  }
+
   if ( Game.dungeon.monsterTable == null ) {
     // Sets up the monster table the first time this is run. Each
     // dungeon run can use up to 3 different monster classes.
@@ -171,6 +180,8 @@ function createMonster() {
   var monsterClassId = Game.dungeon.monsterTable.roll();
   var monsterClass = _.find(Game.gallery.monsterClasses, {id: monsterClassId});
   var level = Math.floor(Game.dungeon.age / (130/20)) +1;
+  var variance = parseInt(Game.dungeon.monsterLevelVariance.roll());
+  level = constrain( level + variance, 1, 20);
 
   var event = {
     type: 'monster',
@@ -335,8 +346,7 @@ function checkLimits(character) {
   var lim = character.limits || Game.dungeon.defaultLimits;
   _.forOwn(character.attributes, function(value, key) {
     if ( lim[key] == null) return;
-    if ( att[key] < lim[key].min ) att[key] = lim[key].min;
-    if ( att[key] > lim[key].max ) att[key] = lim[key].max;
+    att[key] = constrain(att[key], lim);
   });
 }
 

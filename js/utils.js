@@ -24,6 +24,18 @@ function allZeroes(obj) {
   }, true);
 }
 
+// Returns a number constrained by an upper and lower limit.
+function constrain(x, min, max) {
+  if ( ! _.isNumber(min) ) {
+    max = min.max;
+    min = min.min;
+  }
+
+  if ( x < min ) return min;
+  if ( x > max ) return max;
+  return x;
+}
+
 // A simple loot table. Each item in the table has a certain
 // frequency (e.g. {heads: 1, tails: 2}). The `roll()` method
 // returns one item at random with that frequency. The table
