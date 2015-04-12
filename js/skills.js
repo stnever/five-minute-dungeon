@@ -15,6 +15,7 @@
     // Higher level monsters give more XP.
     var xp = 20 + Math.max(monster.level - hero.level, 0);
     hero.xp += xp;
+    Game.trigger('hero-modified');
   }
 
   Game.gallery.skills.push({
