@@ -289,7 +289,11 @@ h1 {
 	position: relative;
 }
 
-.skills > li .attr { line-height: 40px; }
+.skills > li .attr {
+  line-height: 40px;
+  display: inline-block;
+  margin-right: 20px;
+}
 
 .skills > li.selected {
 	box-shadow: 0 0 6px 6px red;

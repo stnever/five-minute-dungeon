@@ -39,7 +39,40 @@ Game.gallery.heroClasses.push({
 
 Game.gallery.heroClasses.push({
   id: 'barbarian',
-  name: 'Barbarian'
+  name: 'Barbarian',
+  description: '',
+
+  nextLevelXp: 100,
+  level: 1,
+  xp: 0,
+  attributes: {
+    hp: 600,
+    atk: 25,
+    def: 10,
+    spd: 40,
+
+    coins: 36,
+    keys: 2,
+    stars: 2
+  },
+
+  limits: {
+    hp : { min: 1, max: between(1700, 2000, 100) },
+    atk: { min: 0, max: between(215, 235, 5) },
+    def: { min: 0, max: between(200, 220, 5) },
+    spd: { min: between(8,9), max: 255 }
+  },
+
+  skills: [
+    {name: 'upgrade1', type: 'level-up', stars: 1, gain: { hp: +20, atk: +4 }},
+    {name: 'upgrade2', type: 'level-up', stars: 1, gain: { hp: +20, def: +4 }},
+    {name: 'upgrade3', type: 'level-up', stars: 1, gain: { hp: +20, spd: -2 }},
+
+    _.find(Game.gallery.skills, {id: 'normal-experience'}),
+    _.find(Game.gallery.skills, {id: 'more-gems'}),
+    _.find(Game.gallery.skills, {id: 'more-coins'})
+  ]
+
 })
 
 Game.gallery.heroClasses.push({

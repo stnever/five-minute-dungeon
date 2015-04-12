@@ -112,10 +112,10 @@ function DungeonController( $scope ) {
 		return ( v == l.min || v == l.max );
 	}
 
-	$scope.enterDungeon = function() {
+	$scope.enterDungeon = function(heroClass) {
 
 		$scope.Game.state = 'dungeon';
-		enterDungeon(Game.gallery.heroClasses[0], randomDungeonGenerator);
+		enterDungeon(heroClass, randomDungeonGenerator);
 
 		console.log('monsters', Game.dungeon.monsterTable.freqs);
 		console.log('bosses', Game.dungeon.bossPositions);

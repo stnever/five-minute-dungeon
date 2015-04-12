@@ -60,20 +60,22 @@
   Game.gallery.skills.push({
     id: 'more-gems', name: 'Gem Seeker', description: 'Find more gems.',
     onEnterDungeon: function() {
-      _.forOwn(Game.dungeon.frequencies.loot, function(value, key) {
-        if ( key.indexOf('gem') != -1 )
-          Game.dungeon.frequencies.loot[key] += value;
+      var newFreqs = _.mapValues(Game.dungeon.lootTable.freqs, function(value, key) {
+        var isGem = ( key.indexOf('coin') != -1 );
+        return isGem ? value * 2 : value;
       })
+      Game.dungeon.lootTable.update(newFreqs);
     }
   });
 
   Game.gallery.skills.push({
     id: 'more-coins', name: 'Rich', description: 'Find more coins.',
     onEnterDungeon: function() {
-      _.forOwn(Game.dungeon.frequencies.loot, function(value, key) {
-        if ( key.indexOf('coin') != -1 )
-          Game.dungeon.frequencies.loot[key] += value;
+      var newFreqs = _.mapValues(Game.dungeon.lootTable.freqs, function(value, key) {
+        var isCoin = ( key.indexOf('coin') != -1 );
+        return isCoin ? value * 2 : value;
       })
+      Game.dungeon.lootTable.update(newFreqs);
     }
   });
 
