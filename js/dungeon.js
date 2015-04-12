@@ -164,7 +164,7 @@ function randomDungeonGenerator() {
 
 function createBoss(bossClass, level) {
   var event = {
-    type: 'monster',
+    type: 'boss',
     monster: instantiate(bossClass, level)
   }
 
