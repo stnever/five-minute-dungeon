@@ -91,7 +91,7 @@ html, body {
 
   .hero-bar .attr {
     font-size: .7em;
-    max-width: 60px !important;
+    width: 60px !important;
   }
 
   .dungeon .attr {
