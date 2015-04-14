@@ -1,3 +1,18 @@
+$(function() {
+	$(document).on('tapstart', 'li.clickable', function() {
+		if ( ! $(this).hasClass('black'))
+			$(this).addClass('clicked');
+	})
+
+	$(document).on('tapmove', 'li', function() {
+		$('.clicked').removeClass('clicked');
+	})
+
+	$(document).on('tapend', function() {
+		$('.clicked').removeClass('clicked');
+	})
+})
+
 var app = angular.module("FiveMinuteDungeon",[/*'velocity.ui', 'ngAnimate'*/]);
 
 app.filter('prettyJson', function() {

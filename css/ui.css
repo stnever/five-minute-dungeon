@@ -195,11 +195,11 @@ h1 {
   font-size: 0px;
 }
 
-.btns > li.clickable:not(.disabled):active::after {
+.btns > li.clicked::after {
   content: '';
   position: absolute;
   top: 0; left: 0; width: 100%; height: 100%;
-  background-color: #fff;
+  background-color: #00dfff;
   opacity: 0.6;
   pointer-events: none;
 }
