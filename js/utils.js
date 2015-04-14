@@ -45,6 +45,13 @@ function LootTable(newFreqs) {
   this.update(newFreqs);
 }
 
+LootTable.prototype.clear = function() {
+  this.freqs = {}
+  this.spectrum = [];
+  this.max = 0;
+  return this;
+}
+
 // This method can accept an object (e.g. {heads:1, tails:2})
 // or an array (e.g. ['heads', 'tails']). If an array is passed,
 // each element will have the same chance to appear.
@@ -62,6 +69,8 @@ LootTable.prototype.update = function(newFreqs) {
 
   var me = this;
   _.forOwn(this.freqs, function(freqValue, freqKey) {
+    if ( freqValue < 1 ) return;
+
     me.max += freqValue;
     me.spectrum.push({key: freqKey, limit: me.max});
   })

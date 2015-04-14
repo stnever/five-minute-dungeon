@@ -74,6 +74,25 @@ function enterDungeon(heroClass, dungeonGenerator) {
     })
   })
 
+  // For the time being the hero cannot gain any keys, so
+  // if his keys are depleted we can remove all Chest events
+  // and set their frequency to zero.
+  Game.on('hero-modified', function() {
+    if ( Game.dungeon.hero.attributes.keys > 0 ) return;
+
+    // HACK: If the hero has the 'unlock' or 'dark presence' traits,
+    // chests are free, so we shouldn't do anything. To avoid testing
+    // for the traits themselves, we'll instead test for "chests
+    // that do not cost keys".
+
+    _.remove(Game.dungeon.events, function(e) {
+      return e.type == 'chest' &&
+        (e.cost.keys == null || e.cost.keys < 1)
+    });
+
+    Game.dungeon.eventsTable.update({chest: 0});
+  })
+
 }
 
 // This is a dungeon generator function that uses event-type and

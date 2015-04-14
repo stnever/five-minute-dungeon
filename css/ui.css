@@ -111,6 +111,9 @@ html, body {
   }
 
   .credits { margin: 0 10px;}
+
+  /* No use for the debug div on mobile. */
+  .debug { display: none; }
 }
 
 /* These styles control the basic two-column layout ===================================== */
@@ -250,7 +253,8 @@ h1 {
 .hero-bar .details {
   height: 100%;
   margin-left: 20px;
-  width: calc(100% - 84px);
+  margin-right: 10px;
+  width: calc(100% - 94px);
 }
 
 .hero-bar .line {
@@ -379,19 +383,17 @@ h1 {
 
 
 .loot.sm {
-  height: 32px;
-  width: 32px;
-  background-size: 32px;
+  top: -4px;
 }
 
 .loot {
   position: absolute;
-  top: 0px;
+  top: 4px;
   right: 0px;
   margin: 4px;
-  height: 56px;
-  width: 56px;
-  background-size: 56px;
+  height: 48px;
+  width: 48px;
+  background-size: 48px;
   background-position: center center;
   background-repeat: no-repeat;
   overflow: hidden;

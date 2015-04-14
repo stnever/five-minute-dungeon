@@ -106,7 +106,7 @@
   Game.gallery.skills.push({
     id: 'disarm-trap',
     name: 'Disarm Trap',
-    description: 'Disarm traps with keys.',
+    description: 'Use keys, if available, to disarm traps.',
     onDungeonEventAppear: function(event) {
       if ( event.type == 'trap' && Game.dungeon.hero.attributes.keys > 0 ) {
         event.costPerTurn = 0;
@@ -178,7 +178,7 @@
   });
 
   Game.gallery.skills.push({
-    id: 'steal', name: 'Steal', description: 'If you can\'t afford an item, use key to steal it.',
+    id: 'steal', name: 'Steal', description: 'If you can\'t afford an item, spend a key to steal it.',
 
     onDungeonEventAppear: function(event) {
       // Aumenta o custo normal deste evento
