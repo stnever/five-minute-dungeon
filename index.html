@@ -45,15 +45,15 @@
     <div style="padding-top: 10px;" class="container classic" ng-if="Game.state == 'menu'">
       <div class="logo"></div>
       <ul class="menu btns">
-        <li class="pink" ng-click="Game.state = 'hero-select'">
+        <li class="pink clickable" ng-click="Game.state = 'hero-select'">
           <div class="portrait skeleton-king"></div>
           <h3>Dungeon</h3>
         </li>
-        <li class="orange" ng-click="Game.state = 'gallery'">
+        <li class="orange clickable" ng-click="Game.state = 'gallery'">
           <div class="portrait gem-silver"></div>
           <h3>Gallery</h3>
         </li>
-        <li class="blueish-black" ng-click="Game.state = 'credits'">
+        <li class="blueish-black clickable" ng-click="Game.state = 'credits'">
           <div class="portrait robot"></div>
           <h3>About</h3>
         </li>
@@ -62,7 +62,7 @@
 
     <div class="container classic" ng-if="Game.state == 'hero-select'">
       <ul class="menu btns">
-        <li class="blue" ng-repeat="c in Game.gallery.heroClasses"
+        <li class="blue clickable" ng-repeat="c in Game.gallery.heroClasses"
             ng-click="enterDungeon(c)">
           <div class="portrait {{c.id}}"></div>
           <div class="details">

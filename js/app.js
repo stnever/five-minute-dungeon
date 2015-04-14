@@ -1,15 +1,34 @@
 $(function() {
+
+	var timer = null;
+
 	$(document).on('tapstart', 'li.clickable', function() {
-		if ( ! $(this).hasClass('black'))
-			$(this).addClass('clicked');
+		var $t = $(this);
+		if ( ! $t.hasClass('black'))
+			timer = setTimeout(function() {
+				$t.addClass('clicked');
+			}, 100)
 	})
+
+	// $(document).on('tapstart', 'li.clickable', function() {
+	// 	if ( ! $(this).hasClass('black'))
+	// 		$(this).addClass('clicked');
+	// })
 
 	$(document).on('tapmove', 'li', function() {
 		$('.clicked').removeClass('clicked');
+		if ( timer != null ) {
+			clearTimeout(timer);
+			timer = null;
+		}
 	})
 
 	$(document).on('tapend', function() {
 		$('.clicked').removeClass('clicked');
+		if ( timer != null ) {
+			clearTimeout(timer);
+			timer = null;
+		}
 	})
 })
 
