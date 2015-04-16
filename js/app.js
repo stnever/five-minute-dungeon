@@ -213,4 +213,8 @@ function DungeonController( $scope ) {
 		$scope.hover = null;
 	}
 
+	$scope.isFree = function(e) {
+		return _.sum(e.cost) < 1;
+	}
+
 }

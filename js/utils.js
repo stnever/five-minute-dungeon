@@ -17,13 +17,6 @@ function floor(obj) {
   return obj;
 }
 
-// Returns true if every numerical value in obj is 0.
-function allZeroes(obj) {
-  return _.reduce(obj, function(acc, value) {
-    return acc && ( value !== 0 );
-  }, true);
-}
-
 // Returns a number constrained by an upper and lower limit.
 function constrain(x, min, max) {
   if ( ! _.isNumber(min) ) {

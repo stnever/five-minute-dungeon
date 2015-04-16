@@ -350,7 +350,7 @@ function calculateCombat( monster, hero ) {
   result.attackable =
     ( hero.attributes.hp > result.totalDamageToHero );
 
-  Game.trigger('after-combat-calculation', result, monster, hero);
+  Game.trigger('after-combat-calculation', [result, monster, hero]);
   return result;
 }
 

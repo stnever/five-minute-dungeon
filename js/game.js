@@ -75,8 +75,9 @@ Game.off = function(evt, listener) {
 Game.trigger = function(evt, args) {
   // console.log('event triggered', evt, args);
   var l = Game.listeners[evt] || [];
+  args = _.isArray(args) ? args : [args];
   for ( var i = l.length-1; i >= 0; i-- ) {
-    var result = l[i].call(null, args);
+    var result = l[i].apply(null, args);
 
     if ( result === Game._REMOVE )
       l.splice(i, 1);

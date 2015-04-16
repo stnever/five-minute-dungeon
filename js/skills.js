@@ -82,16 +82,16 @@
   Game.gallery.skills.push({
     id: 'more-chests', name: 'Lucky', description: 'Find more chests.',
     onEnterDungeon: function() {
-      var freqs = Game.dungeon.frequencies.events;
-      freqs.chest += freqs.chest;
+      var f = Game.dungeon.eventsTable.freqs.chest;
+      Game.dungeon.eventsTable.update({chest: 2 * f});
     }
   });
 
   Game.gallery.skills.push({
     id: 'more-merchants', name: 'Shopping', description: 'Find more shops.',
     onEnterDungeon: function() {
-      var freqs = Game.dungeon.frequencies.events;
-      freqs.merchant += freqs.merchant;
+      var f = Game.dungeon.eventsTable.freqs.merchant;
+      Game.dungeon.eventsTable.update({merchant: 2 * f});
     }
   });
 
@@ -180,24 +180,25 @@
   Game.gallery.skills.push({
     id: 'steal', name: 'Steal', description: 'If you can\'t afford an item, spend a key to steal it.',
 
-    onDungeonEventAppear: function(event) {
+    onDungeonEventAppear: function(e) {
       // Aumenta o custo normal deste evento
-      if ( event.type != 'merchant' ) return;
-      event.originalCost = event.cost.coins;
-      event.cost.coins += 2;
+      if ( e.type != 'merchant' ) return;
+      e.originalCost = e.cost.coins;
+      e.cost.coins += 2;
     },
 
     onDungeonEventEnd: function() {
       Game.dungeon.events.forEach(function(e) {
         if ( e.type != 'merchant' ) return;
 
-        // Se o custo é maior que as moedas atuais mas temos chaves,
-        // troca o custo por 1 chave
+        // If the cost is greater than the amount of coins the hero
+        // has, but she still has keys, then change the cost to
+        // 1 key.
         var attrs = Game.dungeon.hero.attributes;
-        if ( event.cost.coins > attrs.coins && attrs.keys > 0 ) {
-          event.cost = { keys: 1 }
+        if ( e.cost.coins > attrs.coins && attrs.keys > 0 ) {
+          e.cost = { keys: 1 }
         } else {
-          event.cost = { coins: event.originalCost }
+          e.cost = { coins: e.originalCost }
         }
       })
     }
@@ -211,7 +212,15 @@
     }
   });
 
-  // {id: 'block', name: 'Block', description: 'Block some damage.'},
+  Game.gallery.skills.push({
+    id: 'block', name: 'Block', description: 'Ignore the 1-point minimum damage for short combats.',
+    onAfterCombatCalculation: function(combat, monster, hero) {
+      if ( combat.totalDamageToHero > 0 && // play well with life-leech
+           combat.totalDamageToHero <= 5 &&
+           monster.attributes.atk <= hero.attributes.def )
+        combat.totalDamageToHero = 0;
+    }
+  });
 
   // {id: 'apprentice', name: 'Apprentice', description: 'Learn new skills from old heroes.'},
 

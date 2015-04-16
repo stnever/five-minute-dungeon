@@ -233,7 +233,7 @@
               <div class="cost keys" ng-if="e.cost.keys > 0"></div>
               <div class="cost coins" ng-if="e.cost.coins > 0">{{e.cost.coins}}</div>
               <div class="cost hp" ng-if="e.cost.hp > 0">{{e.cost.hp}}</div>
-              <div class="cost free" ng-if="isFree()"></div>
+              <div class="cost free" ng-if="isFree(e)"></div>
             </div>
 
             <div ng-switch-when="character">character</div>
