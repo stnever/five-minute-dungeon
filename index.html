@@ -221,8 +221,11 @@
           <div class="details" ng-switch="e.type">
 
             <div ng-if="e.combat != null">
-              <div class="cost hp">{{e.combat.totalDamageToHero}}
-                <!-- <span class="combat-turns">({{e.combat.numberOfHeroTurns}} turns)</span> -->
+              <div class="cost hp inverse" ng-if="e.combat.totalDamageToHero < 0">
+                +{{-1 * e.combat.totalDamageToHero}}
+              </div>
+              <div class="cost hp" ng-if="e.combat.totalDamageToHero >= 0">
+                {{e.combat.totalDamageToHero}}
               </div>
             </div>
 
@@ -248,7 +251,7 @@
             ng-click="skillActivated(skill); $event.stopPropagation();" >
             <fmd-gain gain="skill.gain"></fmd-gain>
             <span class="skill-cost" ng-if="skill.stars == 1">&#xe620;</span>
-            <span class="skill-cost" ng-if="skill.stars == 2">&#xe620;&#xe620;</span>
+            <span class="skill-cost" ng-if="skill.stars == 2">&#xe620; &#xe620;</span>
             <p>{{skill.description}}</p>
           </li>
           <li ng-if="hover != null" class="mouseover gray">

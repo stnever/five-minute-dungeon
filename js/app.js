@@ -146,6 +146,8 @@ function DungeonController( $scope ) {
 
 	$scope.Game = Game;
 
+	$scope.Math = Math;
+
 	$scope.eventColor = function(event) {
 		if ( ! $scope.isAvailable(event) ) return 'black';
 		if ( event.type == 'boss' ) return 'pink';

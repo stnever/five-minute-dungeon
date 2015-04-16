@@ -82,7 +82,40 @@ Game.gallery.heroClasses.push({
 
 Game.gallery.heroClasses.push({
   id: 'assassin',
-  name: 'Assassin'
+  name: 'Assassin',
+  description: 'A shadowy figure that thrives on the demise of his targets.',
+
+  nextLevelXp: 100,
+  level: 1,
+  xp: 0,
+  attributes: {
+    hp: 400,
+    atk: 27,
+    def: 12,
+    spd: 38,
+
+    coins: 36,
+    keys: 2,
+    stars: 2
+  },
+
+  limits: {
+    hp : { min: 1, max: between(1000, 1300, 100) },
+    atk: { min: 0, max: between(210, 245, 5) },
+    def: { min: 0, max: between(210, 235, 5) },
+    spd: { min: between(7,8), max: 255 }
+  },
+
+  skills: [
+    {name: 'upgrade1', type: 'level-up', stars: 2, gain: { atk: +9 }},
+    {name: 'upgrade3', type: 'level-up', stars: 2, gain: { def: +9 }},
+    {name: 'upgrade3', type: 'level-up', stars: 2, gain: { spd: -5 }},
+
+    _.find(Game.gallery.skills, {id: 'normal-experience'}),
+    _.find(Game.gallery.skills, {id: 'purification'}),
+    _.find(Game.gallery.skills, {id: 'evasion'}),
+    _.find(Game.gallery.skills, {id: 'leech'})
+  ]
 })
 
 Game.gallery.heroClasses.push({

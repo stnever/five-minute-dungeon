@@ -324,7 +324,7 @@ h1 {
     color: #FFFFFF;
     position: absolute;
     top: 50%;
-    margin-top: -20px;
+    margin-top: -16px;
     right: 10px;
 }
 
@@ -363,6 +363,12 @@ h1 {
 .cost.hp:before {
   content: "\e602";
   color: #FF00BF;
+}
+
+.cost.hp.inverse { color: #f1c40f; }
+.cost.hp.inverse:before {
+  content: '\e600';
+  color: #f1c40f;
 }
 
 .cost.hp .combat-turns { color: #000; }
@@ -426,7 +432,6 @@ ul.attributes li { list-style-type: none; }
   font-family: 'icomoon';
   font-size: .8em;
   display: inline-block;
-  width: 1.2em;
 
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
